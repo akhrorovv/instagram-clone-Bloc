@@ -2,12 +2,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:instagram_clone/bloc/splash_bloc.dart';
 import 'package:instagram_clone/pages/home_page.dart';
 import 'package:instagram_clone/pages/signin_page.dart';
 import 'package:instagram_clone/pages/signup_page.dart';
 import 'package:instagram_clone/pages/splash_page.dart';
 import 'package:instagram_clone/services/notif_service.dart';
+
+import 'bloc/splash_page/splash_bloc.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
