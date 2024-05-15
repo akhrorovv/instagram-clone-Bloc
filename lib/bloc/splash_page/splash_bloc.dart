@@ -17,8 +17,7 @@ import 'splash_state.dart';
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
   SplashBloc() : super(SplashInitialState());
 
-  static final FirebaseMessaging _firebaseMessaging =
-      FirebaseMessaging.instance;
+  static final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   callNextPage(BuildContext context) {
     if (AuthService.isLoggedIn()) {
@@ -33,7 +32,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         ),
       );
     } else {
-      // Get.offNamed(SignInPage.id);
       Navigator.pushReplacementNamed(context, SignInPage.id);
     }
   }

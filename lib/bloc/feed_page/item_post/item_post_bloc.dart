@@ -1,19 +1,22 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instagram_clone/bloc/feed_page/feed_bloc.dart';
+import 'package:instagram_clone/bloc/feed_page/feed_event.dart';
 import 'package:instagram_clone/bloc/feed_page/item_post/item_post_event.dart';
 import 'package:instagram_clone/bloc/feed_page/item_post/item_post_state.dart';
 
 import '../../../model/member_model.dart';
 import '../../../services/db_service.dart';
 import '../../../services/http_service.dart';
+import '../../../services/utils_service.dart';
 
 class ItemPostBloc extends Bloc<ItemPostEvent, ItemPostState> {
   ItemPostBloc() : super(ItemPostInitialState()) {
     on<LikePostEvent>(apiPostLike);
     on<UnlikePostEvent>(apiPostUnLike);
+    on<RemovePostEvent>(dialogRemovePost);
   }
 
-  Future<void> apiPostLike(
-      LikePostEvent event, Emitter<ItemPostState> emit) async {
+  Future<void> apiPostLike(LikePostEvent event, Emitter<ItemPostState> emit) async {
     emit(ItemPostLoadingState());
 
     await DBService.likePost(event.post, true);
@@ -37,5 +40,22 @@ class ItemPostBloc extends Bloc<ItemPostEvent, ItemPostState> {
     await DBService.likePost(event.post, false);
     event.post.liked = false;
     emit(UnlikePostState(event.post));
+  }
+
+  Future<void> dialogRemovePost(
+      RemovePostEvent event, Emitter<ItemPostState> emit) async {
+    var result = await Utils.dialogCommon(
+      event.context,
+      "Instagram",
+      "Do you want to delete this post?",
+      false,
+    );
+
+    if (result) {
+      emit(ItemPostLoadingState());
+
+      DBService.removePost(event.post).then(
+          (value) => {event.context.read<FeedBloc>().add(FeedLoadPostEvent())});
+    }
   }
 }

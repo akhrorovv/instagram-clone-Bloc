@@ -25,5 +25,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeIn,
     );
+    emit(HomeAnimatedToPageState(currentTap, pageController!));
   }
 }

@@ -5,12 +5,12 @@ abstract class ItemPostState extends Equatable {
   const ItemPostState();
 }
 
-class ItemPostLoadingState extends ItemPostState {
+class ItemPostInitialState extends ItemPostState {
   @override
   List<Object?> get props => [];
 }
 
-class ItemPostInitialState extends ItemPostState {
+class ItemPostLoadingState extends ItemPostState {
   @override
   List<Object?> get props => [];
 }

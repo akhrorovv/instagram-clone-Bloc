@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instagram_clone/bloc/feed_page/feed_bloc.dart';
+import 'package:instagram_clone/bloc/feed_page/liked_bloc.dart';
 import 'package:instagram_clone/bloc/home_page/home_bloc.dart';
 import 'package:instagram_clone/bloc/home_page/home_state.dart';
 import '../bloc/home_page/home_event.dart';
@@ -35,13 +36,20 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state){
+      builder: (context, state) {
         return Scaffold(
           body: PageView(
             controller: homeBloc.pageController,
             children: [
-              BlocProvider(
-                create: (context) => FeedBloc(),
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => FeedBloc(),
+                  ),
+                  BlocProvider(
+                    create: (context) => LikedBloc(),
+                  )
+                ],
                 child: MyFeedPage(pageController: homeBloc.pageController),
               ),
               const MySearchPage(),

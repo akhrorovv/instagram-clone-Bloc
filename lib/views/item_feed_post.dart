@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instagram_clone/bloc/feed_page/item_post/item_post_state.dart';
+import 'package:instagram_clone/bloc/feed_page/liked_bloc.dart';
 
 import '../bloc/feed_page/item_post/item_post_bloc.dart';
 import '../bloc/feed_page/item_post/item_post_event.dart';
@@ -63,6 +65,9 @@ Widget itemOfPost(BuildContext context, Post post) {
                         icon: const Icon(Icons.more_horiz),
                         onPressed: () {
                           // feedBloc.dialogRemovePost(context, post);
+                          context
+                              .read<ItemPostBloc>()
+                              .add(RemovePostEvent(context, post));
                         },
                       )
                     : const SizedBox.shrink(),
@@ -97,24 +102,40 @@ Widget itemOfPost(BuildContext context, Post post) {
             children: [
               Row(
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      if (!post.liked) {
-                        context.read<ItemPostBloc>().add(LikePostEvent(post));
-                      } else {
-                        context.read<ItemPostBloc>().add(UnlikePostEvent(post));
-                      }
+                  BlocBuilder<ItemPostBloc, ItemPostState>(
+                    builder: (context, state) {
+                      return IconButton(
+                        onPressed: () {
+                          if(post.liked){
+                            context.read<ItemPostBloc>().add(UnlikePostEvent(post));
+                          } else {
+                            context.read<ItemPostBloc>().add(LikePostEvent(post));
+
+                          }
+                        },
+                        icon: Icon(post.liked
+                            ? Icons.favorite
+                            : Icons.favorite_border),
+                        color: post.liked ? Colors.red : Colors.black,
+                      );
                     },
-                    icon: post.liked
-                        ? const Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                          )
-                        : const Icon(
-                            Icons.favorite_border,
-                            color: Colors.black,
-                          ),
                   ),
+                  // IconButton(
+                  //   onPressed: () {
+                  //     context
+                  //         .read<LikedBloc>()
+                  //         .add(LikedEvent(changeState: post.liked));
+                  //   },
+                  //   icon: BlocSelector<LikedBloc, LikedState, bool>(
+                  //     selector: (state) => state.changeState,
+                  //     builder: (context, state) {
+                  //       return Icon(
+                  //         state ? Icons.favorite : Icons.favorite_border,
+                  //         color: state ? Colors.red : Colors.black,
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                   IconButton(
                     onPressed: () {},
                     icon: const Icon(
