@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:instagram_clone/bloc/search_page/search_bloc.dart';
 import '../bloc/feed_page/feed_bloc.dart';
 import '../bloc/home_page/home_bloc.dart';
 import '../bloc/home_page/home_event.dart';
 import '../bloc/home_page/home_state.dart';
+import '../bloc/search_page/search_bloc.dart';
+import '../bloc/upload_page/upload_bloc.dart';
 import 'my_feed_page.dart';
 import 'my_likes_page.dart';
 import 'my_profile_page.dart';
@@ -47,7 +48,10 @@ class _HomePageState extends State<HomePage> {
                 create: (context) => SearchBloc(),
                 child: const MySearchPage(),
               ),
-              MyUploadPage(pageController: homeBloc.pageController),
+              BlocProvider(
+                create: (context) => UploadBloc(),
+                child: MyUploadPage(pageController: homeBloc.pageController),
+              ),
               const MyLikesPage(),
               const MyProfilePage(),
             ],
