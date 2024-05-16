@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instagram_clone/bloc/search_page/search_bloc.dart';
 import '../bloc/feed_page/feed_bloc.dart';
 import '../bloc/home_page/home_bloc.dart';
 import '../bloc/home_page/home_event.dart';
@@ -42,7 +43,10 @@ class _HomePageState extends State<HomePage> {
                 create: (context) => FeedBloc(),
                 child: MyFeedPage(pageController: homeBloc.pageController),
               ),
-              const MySearchPage(),
+              BlocProvider(
+                create: (context) => SearchBloc(),
+                child: const MySearchPage(),
+              ),
               MyUploadPage(pageController: homeBloc.pageController),
               const MyLikesPage(),
               const MyProfilePage(),
