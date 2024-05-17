@@ -25,9 +25,8 @@ class _MyUploadPageState extends State<MyUploadPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocBuilder<UploadBloc, UploadState>(
-      builder: (context, state){
+      builder: (context, state) {
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
@@ -40,7 +39,9 @@ class _MyUploadPageState extends State<MyUploadPage> {
             actions: [
               IconButton(
                 onPressed: () {
-                  context.read<UploadBloc>().add(UploadPostEvent(widget.pageController!));
+                  context
+                      .read<UploadBloc>()
+                      .add(UploadPostEvent(widget.pageController!));
                 },
                 icon: const Icon(
                   Icons.drive_folder_upload,
@@ -66,46 +67,48 @@ class _MyUploadPageState extends State<MyUploadPage> {
                           color: Colors.grey.withOpacity(0.4),
                           child: uploadBloc.imageFile == null
                               ? const Center(
-                            child: Icon(
-                              Icons.add_a_photo,
-                              size: 50,
-                              color: Colors.grey,
-                            ),
-                          )
+                                  child: Icon(
+                                    Icons.add_a_photo,
+                                    size: 50,
+                                    color: Colors.grey,
+                                  ),
+                                )
                               : Stack(
-                            children: [
-                              Image.file(
-                                uploadBloc.imageFile!,
-                                width: double.infinity,
-                                height: double.infinity,
-                                fit: BoxFit.cover,
-                              ),
-                              Container(
-                                width: double.infinity,
-                                color: Colors.black12,
-                                padding: EdgeInsets.all(10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          uploadBloc.imageFile = null;
-                                        });
-                                      },
-                                      icon:
-                                      const Icon(Icons.highlight_remove),
-                                      color: Colors.white,
+                                    Image.file(
+                                      uploadBloc.imageFile!,
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      color: Colors.black12,
+                                      padding: const EdgeInsets.all(10),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                uploadBloc.imageFile = null;
+                                              });
+                                            },
+                                            icon: const Icon(
+                                                Icons.highlight_remove),
+                                            color: Colors.white,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
-                          ),
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
+                        margin:
+                            const EdgeInsets.only(left: 10, right: 10, top: 10),
                         child: TextField(
                           controller: uploadBloc.captionController,
                           style: const TextStyle(color: Colors.black),
@@ -114,8 +117,8 @@ class _MyUploadPageState extends State<MyUploadPage> {
                           maxLines: 5,
                           decoration: const InputDecoration(
                               hintText: "Caption",
-                              hintStyle:
-                              TextStyle(fontSize: 17, color: Colors.black38)),
+                              hintStyle: TextStyle(
+                                  fontSize: 17, color: Colors.black38)),
                         ),
                       ),
                     ],
@@ -124,8 +127,8 @@ class _MyUploadPageState extends State<MyUploadPage> {
               ),
               uploadBloc.isLoading
                   ? const Center(
-                child: CircularProgressIndicator(),
-              )
+                      child: CircularProgressIndicator(),
+                    )
                   : const SizedBox.shrink(),
             ],
           ),

@@ -1,0 +1,30 @@
+import 'package:equatable/equatable.dart';
+import 'package:instagram_clone/model/post_model.dart';
+
+abstract class ItemPostState extends Equatable {
+  const ItemPostState();
+}
+
+class ItemPostInitialState extends ItemPostState {
+  @override
+  List<Object?> get props => [];
+}
+
+class ItemPostLoadingState extends ItemPostState {
+  @override
+  List<Object?> get props => [];
+}
+
+class UnlikePostState extends ItemPostState {
+  final Post post;
+
+  const UnlikePostState(this.post);
+
+  @override
+  List<Object?> get props => [post];
+}
+
+class RemovePostState extends ItemPostState {
+  @override
+  List<Object?> get props => [];
+}

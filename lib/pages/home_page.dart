@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instagram_clone/bloc/likes_page/likes_bloc.dart';
 import '../bloc/feed_page/feed_bloc.dart';
 import '../bloc/home_page/home_bloc.dart';
 import '../bloc/home_page/home_event.dart';
@@ -52,7 +53,10 @@ class _HomePageState extends State<HomePage> {
                 create: (context) => UploadBloc(),
                 child: MyUploadPage(pageController: homeBloc.pageController),
               ),
-              const MyLikesPage(),
+              BlocProvider(
+                create: (context) => LikesBloc(),
+                child: const MyLikesPage(),
+              ),
               const MyProfilePage(),
             ],
             onPageChanged: (int index) {
