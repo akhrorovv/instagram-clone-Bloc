@@ -1,12 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:instagram_clone/bloc/likes_page/likes_bloc.dart';
-import 'package:instagram_clone/bloc/likes_page/likes_state.dart';
-import '../bloc/likes_page/likes_event.dart';
-import '../model/post_model.dart';
-import '../services/db_service.dart';
-import '../services/utils_service.dart';
+import '../bloc/likes/likes_bloc.dart';
+import '../bloc/likes/likes_event.dart';
+import '../bloc/likes/likes_state.dart';
 import '../views/item_likes_post.dart';
 
 class MyLikesPage extends StatefulWidget {

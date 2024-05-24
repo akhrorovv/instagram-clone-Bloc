@@ -16,7 +16,6 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-
   var isLoading = false;
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
@@ -31,8 +30,8 @@ class _SignInPageState extends State<SignInPage> {
     });
 
     AuthService.signInUser(context, email, password).then((firebaseUser) => {
-      _getFirebaseUser(firebaseUser),
-    });
+          _getFirebaseUser(firebaseUser),
+        });
   }
 
   _getFirebaseUser(User? firebaseUser) async {
@@ -58,7 +57,7 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
@@ -66,19 +65,20 @@ class _SignInPageState extends State<SignInPage> {
           padding: const EdgeInsets.all(20),
           width: MediaQuery.of(context).size.width,
           decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color.fromRGBO(193, 53, 132, 1),
-                    Color.fromRGBO(131, 58, 180, 1),
-                  ])),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromRGBO(193, 53, 132, 1),
+                Color.fromRGBO(131, 58, 180, 1),
+              ],
+            ),
+          ),
           child: Stack(
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -86,9 +86,10 @@ class _SignInPageState extends State<SignInPage> {
                         const Text(
                           "Instagram",
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 45,
-                              fontFamily: "Billabong"),
+                            color: Colors.white,
+                            fontSize: 45,
+                            fontFamily: "Billabong",
+                          ),
                         ),
 
                         //#email
@@ -97,16 +98,18 @@ class _SignInPageState extends State<SignInPage> {
                           height: 50,
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(7)),
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(7),
+                          ),
                           child: TextField(
                             controller: emailController,
                             style: const TextStyle(color: Colors.white),
                             decoration: const InputDecoration(
-                                hintText: "Email",
-                                border: InputBorder.none,
-                                hintStyle:
-                                TextStyle(fontSize: 17, color: Colors.white54)),
+                              hintText: "Email",
+                              border: InputBorder.none,
+                              hintStyle: TextStyle(
+                                  fontSize: 17, color: Colors.white54),
+                            ),
                           ),
                         ),
 
@@ -125,8 +128,8 @@ class _SignInPageState extends State<SignInPage> {
                             decoration: const InputDecoration(
                                 hintText: "Password",
                                 border: InputBorder.none,
-                                hintStyle:
-                                TextStyle(fontSize: 17, color: Colors.white54)),
+                                hintStyle: TextStyle(
+                                    fontSize: 17, color: Colors.white54)),
                           ),
                         ),
 
@@ -145,15 +148,14 @@ class _SignInPageState extends State<SignInPage> {
                               child: const Center(
                                 child: Text(
                                   "Sign In",
-                                  style:
-                                  TextStyle(color: Colors.white, fontSize: 17),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 17),
                                 ),
                               )),
                         ),
                       ],
                     ),
                   ),
-
 
                   //#footer
                   Row(
@@ -179,16 +181,13 @@ class _SignInPageState extends State<SignInPage> {
                           )),
                     ],
                   ),
-
                 ],
               ),
-
               isLoading
                   ? const Center(
-                child: CircularProgressIndicator(),
-              )
+                      child: CircularProgressIndicator(),
+                    )
                   : const SizedBox.shrink(),
-
             ],
           ),
         ),

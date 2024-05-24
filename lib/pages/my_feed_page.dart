@@ -1,16 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:instagram_clone/bloc/feed_page/feed_bloc.dart';
-import 'package:instagram_clone/bloc/feed_page/item_post/item_post_bloc.dart';
-import 'package:instagram_clone/bloc/feed_page/item_post/item_post_event.dart';
-import 'package:instagram_clone/bloc/feed_page/item_post/item_post_state.dart';
-import '../bloc/feed_page/feed_event.dart';
-import '../bloc/feed_page/feed_state.dart';
-import '../model/member_model.dart';
+import '../bloc/feed/feed_bloc.dart';
+import '../bloc/feed/feed_event.dart';
+import '../bloc/feed/feed_state.dart';
 import '../model/post_model.dart';
-import '../services/db_service.dart';
-import '../services/http_service.dart';
 import '../views/item_feed_post.dart';
 
 class MyFeedPage extends StatefulWidget {
@@ -28,55 +21,70 @@ class _MyFeedPageState extends State<MyFeedPage> {
   @override
   void initState() {
     super.initState();
-    feedBloc = BlocProvider.of<FeedBloc>(context);
+    feedBloc = context.read<FeedBloc>();
 
-    feedBloc.add(FeedLoadPostEvent());
+    feedBloc.add(LoadFeedPostsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FeedBloc, FeedState>(
+    return BlocConsumer<FeedBloc, FeedState>(
+      listener: (context, state) {},
       builder: (context, state) {
-        return Scaffold(
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            title: const Text(
-              "Instagram",
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Billabong',
-                fontSize: 30,
-              ),
-            ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  widget.pageController!.animateToPage(
-                    2,
-                    duration: const Duration(microseconds: 200),
-                    curve: Curves.easeIn,
-                  );
-                },
-                icon: const Icon(Icons.camera_alt),
-                color: const Color.fromRGBO(193, 53, 132, 1),
-              ),
-            ],
-          ),
-          body: Stack(
-            children: [
-              ListView.builder(
-                itemCount: feedBloc.items.length,
-                itemBuilder: (ctx, index) {
-                  return itemOfPost(context, feedBloc.items[index]);
-                },
-              )
-            ],
-          ),
-        );
+        if (state is FeedLoadingState) {
+          return viewOfMyFeedPage(true, []);
+        }
+        if (state is FeedSuccessState) {
+          return viewOfMyFeedPage(false, state.items);
+        }
+        return viewOfMyFeedPage(false, []);
       },
     );
   }
 
+  Widget viewOfMyFeedPage(bool isLoading, List<Post> items) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: const Text(
+          "Instagram",
+          style: TextStyle(
+            color: Colors.black,
+            fontFamily: 'Billabong',
+            fontSize: 30,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              widget.pageController!.animateToPage(
+                2,
+                duration: const Duration(microseconds: 200),
+                curve: Curves.easeIn,
+              );
+            },
+            icon: const Icon(Icons.camera_alt),
+            color: const Color.fromRGBO(193, 53, 132, 1),
+          ),
+        ],
+      ),
+      body: Stack(
+        children: [
+          ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (ctx, index) {
+              return itemOfPost(context, items[index]);
+            },
+          ),
+          isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : const SizedBox.shrink(),
+        ],
+      ),
+    );
+  }
 }

@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../bloc/likes_page/item_post/item_post_bloc.dart';
-import '../bloc/likes_page/item_post/item_post_event.dart';
-import '../bloc/likes_page/item_post/item_post_state.dart';
-import '../bloc/likes_page/likes_bloc.dart';
-import '../bloc/likes_page/likes_event.dart';
+import '../bloc/likes/item_post/item_post_bloc.dart';
+import '../bloc/likes/item_post/item_post_event.dart';
+import '../bloc/likes/item_post/item_post_state.dart';
+import '../bloc/likes/likes_bloc.dart';
+import '../bloc/likes/likes_event.dart';
 import '../model/post_model.dart';
 
 Widget itemOfPost(BuildContext context, Post post) {

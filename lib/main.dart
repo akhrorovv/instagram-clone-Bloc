@@ -8,7 +8,7 @@ import 'package:instagram_clone/pages/signup_page.dart';
 import 'package:instagram_clone/pages/splash_page.dart';
 import 'package:instagram_clone/services/notif_service.dart';
 
-import 'bloc/splash_page/splash_bloc.dart';
+import 'bloc/splash/splash_bloc.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
